@@ -1,7 +1,7 @@
-SUDOKU SOLVER
-Start Date | 07.11.2024
-Made By: Andrew Carlson (andrewc272)
-Personal Project
+Name        | SUDOKU SOLVER
+Start Date  | 07.11.2024
+Made By     | Andrew Carlson (andrewc272)
+Status      | INCOMPLETE
 
 A project I found interesting and useful for learning about data structures and pointers and file IO is sudoku solver
 	generator. You can solve it many different ways. Recursive backtracking (with or without heuristics), using arrays
@@ -32,7 +32,7 @@ Computer w/ GCC
 
 4. Plan the Timeline
 BY...   | DESCRIPTION                           | COMPLETE? | DATE COMPLETED
-07.11   | Break Down Code into sizable chunks   | NO        |
+07.11   | Break Down Code into sizable chunks   | YES       | 7.11
 07.13   | Step 1 Complete (Text GUI)            | NO        |
 07.14   | Step 2 Complete (Solver)              | NO        |
 07.18   | Project Completion and Testing        | NO        |
@@ -41,13 +41,13 @@ BY...   | DESCRIPTION                           | COMPLETE? | DATE COMPLETED
 5. Design the Architecture
 Variables
 2 Dementional array for Sudoku puzzle
-    (elements can be 1-9 or " " for blank)
+    (elements can be 1-9 or 0 for blank)
 solution array as above
 array of times for solutions
-check if solved
 
 Methods
 Intro Text doesn't take anything and returns a double array
+check if solved
 
 Main
 Sudoku puzzle = Intro text
