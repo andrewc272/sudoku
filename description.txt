@@ -1,0 +1,6 @@
+A project I found interesting and useful for learning about data structures and pointers and file IO is sudoku solver
+	generator. You can solve it many different ways. Recursive backtracking (with or without heuristics), using arrays
+	(single or multidimensional), trees, linked lists, etc. As a non-recursive state machine. As an exact cover problem (see
+	dancing links.) You can create your solve() method to accept a solve function as a function pointer. You can use this
+	project to learn about project tools like make, cmake, autotools, unit test frameworks, timing tools, gdb, valgrind, git,
+	etc..
