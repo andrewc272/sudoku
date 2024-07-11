@@ -1,6 +1,83 @@
+SUDOKU SOLVER
+Start Date | 07.11.2024
+Made By: Andrew Carlson (andrewc272)
+Personal Project
+
 A project I found interesting and useful for learning about data structures and pointers and file IO is sudoku solver
 	generator. You can solve it many different ways. Recursive backtracking (with or without heuristics), using arrays
 	(single or multidimensional), trees, linked lists, etc. As a non-recursive state machine. As an exact cover problem (see
 	dancing links.) You can create your solve() method to accept a solve function as a function pointer. You can use this
 	project to learn about project tools like make, cmake, autotools, unit test frameworks, timing tools, gdb, valgrind, git,
 	etc..
+
+1. Define the Problem
+I can solve an easy sudoku problem by myself in about 3 minutes I want to see if I can make an efficient program to enter, solve and plug in faster than I can do on my own
+    Additional steps would include optimizing the program and trying different solving stategies and timing them against eachother
+
+2. Set Clear Objectives
+Be able to enter a sudoku problem in an efficient and effective manner
+    Try through a GUI(?) then through a file or text if that doesn't work
+Time the sudoku solver to see how long it takes
+Solve the sudoku in the least amount time
+    Basic
+    Random
+    Add different more complex strategies in different orders
+        Look to "Sudoku solving guide.pdf" for the different strategies explained
+    Test how often each strategy is successful
+Redisplay the puzzle so it can be plugged into other programs
+
+3. Identify Requirements
+GitHub reposetory
+Computer w/ GCC
+
+4. Plan the Timeline
+BY...   | DESCRIPTION                           | COMPLETE? | DATE COMPLETED
+07.11   | Break Down Code into sizable chunks   | NO        |
+07.13   | Step 1 Complete (Text GUI)            | NO        |
+07.14   | Step 2 Complete (Solver)              | NO        |
+07.18   | Project Completion and Testing        | NO        |
+07.20   | Write a Conclusion                    | NO        |
+
+5. Design the Architecture
+Variables
+2 Dementional array for Sudoku puzzle
+    (elements can be 1-9 or " " for blank)
+solution array as above
+array of times for solutions
+check if solved
+
+Methods
+Intro Text doesn't take anything and returns a double array
+
+Main
+Sudoku puzzle = Intro text
+
+Reapeat the next three for as many different strategies there is to try
+Start timer
+solution = Sudoku solution "n" (Sudoku puzzle)
+End timer
+
+Display solutions and times of the solutions not GUI I think it will be easier to read this way
+
+6. Choose the Tech Stack
+C
+
+7. Break Down Tasks
+User Interactions
+    Introduction
+    Puzzle Entry
+    Conclusion with times
+timer
+    Start timer
+    Stop timer
+    Save time for each strategy
+Solvers
+    Basic
+        doesn't count on working
+        goes square by square and checks its column row and sqare and eliminates numbers to find the boxes numbers
+    complex solutions
+        use strategies explained in "Sudoku Solving Guide.pdf" in different orders and different ways to solve the puzzle
+
+8. Allocate Resources
+GitHub Account (andrewc272)
+16" Mac Book Pro on the Apple M2 Max
