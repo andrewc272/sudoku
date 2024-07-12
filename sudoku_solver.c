@@ -24,6 +24,7 @@ int is_puzzle_solved();
 
 /*METHODS*/
 void print_puzzle(){
+    printf("\n");
     for(int row = 0; row < PUZZLE_SIZE; row++){
         for( int col = 0; col < PUZZLE_SIZE; col++){
             if(puzzle[row][col] != 0) printf(" %d |", puzzle[row][col]);
@@ -134,6 +135,9 @@ int main(){
         print_puzzle();
         printf("Puzzle Solved!!!\n");
         printf("Solved in: %f", solution_time);
+    }
+    else{
+        printf("Puzzle wasn't solved :(");
     }
     return 0;
 } /* END int main() */
