@@ -1,4 +1,5 @@
-#import <stdio.h>
+#include <stdio.h>
+#include <time.h>
 
 /*VARIABLES*/
 #define PUZZLE_SIZE 9
@@ -25,13 +26,13 @@ int is_puzzle_solved();
 /*METHODS*/
 void print_puzzle(){
     printf("\n");
-    for(int row = 0; row < PUZZLE_SIZE; row++){
-        for( int col = 0; col < PUZZLE_SIZE; col++){
+    for(int row = 0; row < PUZZLE_SIZE; row++){ /*LOOP1*/
+        for( int col = 0; col < PUZZLE_SIZE; col++){ /*LOOP2*/
             if(puzzle[row][col] != 0) printf(" %d |", puzzle[row][col]);
             else printf("   |");
-        }
+        }/*END LOOP2*/
         printf("\n------------------------------------\n");
-    }
+    }/*END LOOP1*/
 }/*END void print_puzzle()*/
 
 int is_puzzle_solved(){
@@ -41,12 +42,13 @@ int is_puzzle_solved(){
     int current_number = 0;
     int square_bottom_right[2] = {0, 0}; /*where {ROW, COL}*/
 
-    /*check rows*/
+    /*LOOP1 check rows*/
     for( int row = 0; row < PUZZLE_SIZE; row++ ) {
 
         /*reset all to 1 (false)*/
         for(int i = 0; i < PUZZLE_SIZE; i++)all_nine_there[i] = 1;
 
+        /*LOOP2*/
         for( int col = 0; col < PUZZLE_SIZE; col++ ){
             current_number = puzzle[row][col];
             if(current_number == 0) return 1;/*empty square*/
@@ -54,33 +56,33 @@ int is_puzzle_solved(){
                 all_nine_there[current_number - 1] = 0;
             }
             else return 1; /*duplacate*/
-        }
-    }
+        }/*END LOOP2*/
+    }/*END LOOP1*/
 
-    /*check cols*/
+    /*LOOP1 check cols*/
     for( int col = 0; col < PUZZLE_SIZE; col++ ) {
 
         /*reset all to 1 (false)*/
         for(int i = 0; i < PUZZLE_SIZE; i++)all_nine_there[i] = 1;
 
+        /*LOOP2*/
         for( int row = 0; row < PUZZLE_SIZE; row++ ){
             current_number = puzzle[row][col];
             if(current_number == 0) return 1; /*empty square*/
             else if(all_nine_there[current_number - 1] != 0){ /*hit!*/
                 all_nine_there[current_number - 1] = 0;
             }
-            else return 1; /*duplacate*/
-        }
-    }
+        }/*END LOOP2*/
+    }/*END LOOP1*/
 
 
     /*check squares*/
-    /*mark the bottom row*/
+    /*LOOP1 mark the bottom row*/
     for ( square_bottom_right[0] = PUZZLE_SIZE/3; 
             square_bottom_right[0] <= PUZZLE_SIZE; 
-            square_bottom_right[0] = square_bottom_right[0] + PUZZLE_SIZE/3 ){
+            square_bottom_right[0] = square_bottom_right[0] + PUZZLE_SIZE/3 ){ 
         
-        /*mark the far right row*/
+        /*LOOP2 mark the far right row*/
         for (square_bottom_right[1] = PUZZLE_SIZE/3; 
             square_bottom_right[1] <= PUZZLE_SIZE; 
             square_bottom_right[1] = square_bottom_right[1] + PUZZLE_SIZE/3 ){
@@ -88,11 +90,11 @@ int is_puzzle_solved(){
             /*reset all to 1 (false)*/
             for(int i = 0; i < PUZZLE_SIZE; i++)all_nine_there[i] = 1;
 
-            /*iterate through the last three rows*/
+            /*LOOP3 iterate through the last three rows*/
             for( int row = square_bottom_right[0] - 3; 
                     row < square_bottom_right[0]; row++ ) {
 
-                /*iterate through the last three columbs and check them*/ 
+                /*LOOP4 iterate through the last three columbs and check them*/ 
                 for(int col = square_bottom_right[1] - 3; 
                     col < square_bottom_right[1]; col++ ){
 
@@ -102,10 +104,10 @@ int is_puzzle_solved(){
                         all_nine_there[current_number - 1] = 0;
                     }
                     else return 1; /*duplacates*/
-                }
-            }
-        }
-    }
+                }/*END LOOP4*/
+            }/*END LOOP3*/
+        }/*END LOOP2*/
+    }/*END LOOP1*/
 
     /*puzzle solved!*/
     return 0;
@@ -114,20 +116,31 @@ int is_puzzle_solved(){
 
 /*MAIN*/
 int main(){
+    /*VARIABLES*/
+    time_t start, end;
+
     /*INTRODUCTION*/
     printf("***SUDOKU SOLVER***");
 
     /*Get Puzzle*/
-    for( int row = 1; row < (PUZZLE_SIZE+1); row++ ){
-        for( int col = 1; col < (PUZZLE_SIZE+1); col++ ){
+    for( int row = 1; row < (PUZZLE_SIZE+1); row++ ){ /*LOOP1*/
+        for( int col = 1; col < (PUZZLE_SIZE+1); col++ ){ /*LOOP2*/
             print_puzzle();
             printf("Enter a number (1-9 or 0 for none) in box... \n");
             printf("\t Row: %d | Column: %d \nHERE: ", row, col);
             scanf("%d", &puzzle[row-1][col-1]);
-        }
-    }
+        } /*END LOOP2*/
+    } /*END LOOP1*/
+
+    /*Timer Start*/
+    start = clock();
 
     /*Solutions*/
+    
+
+    /*Timer End*/
+    end = clock();
+    solution_time = (float)(end/CLOCKS_PER_SEC) - (start/CLOCKS_PER_SEC);
 
     /*CONCLUSION*/
     printf("***RESULTS***\n");
@@ -137,7 +150,8 @@ int main(){
         printf("Solved in: %f", solution_time);
     }
     else{
-        printf("Puzzle wasn't solved :(");
+        printf("Puzzle wasn't solved :(\n");
+        printf("Timer: %f\n", solution_time);
     }
     return 0;
 } /* END int main() */

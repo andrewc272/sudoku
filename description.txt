@@ -33,7 +33,7 @@ Computer w/ GCC
 4. Plan the Timeline
 BY...   | DESCRIPTION                           | COMPLETE? | DATE COMPLETED
 07.11   | Break Down Code into sizable chunks   | YES       | 7.11
-07.13   | Step 1 Complete (Text GUI)            | NO        |
+07.13   | Step 1 Complete (Text GUI)            | YES       | 7.12
 07.14   | Step 2 Complete (Solver)              | NO        |
 07.18   | Project Completion and Testing        | NO        |
 07.20   | Write a Conclusion                    | NO        |
