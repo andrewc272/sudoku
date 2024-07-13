@@ -78,6 +78,7 @@ Solvers
     complex solutions
         use strategies explained in "Sudoku Solving Guide.pdf" in different orders and different ways to solve the puzzle
 
+
 8. Allocate Resources
 GitHub Account (andrewc272)
 16" Mac Book Pro on the Apple M2 Max
