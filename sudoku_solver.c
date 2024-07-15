@@ -7,17 +7,17 @@
 /*9x9 Matrix numbers 1-9 or "0" for empty*/
 int puzzle[PUZZLE_SIZE][PUZZLE_SIZE] = 
     {
-        {2, 0, 3,   4, 0, 0,   0, 0, 5},
-        {8, 0, 9,   1, 6, 0,   7, 0, 4},
-        {0, 0, 6,   0, 3, 0,   0, 1, 9},
+        {6, 0, 3,   4, 0, 1,   8, 9, 7},
+        {7, 0, 5,   2, 9, 6,   3, 0, 1},
+        {9, 0, 4,   0, 8, 0,   0, 0, 0},
 
-        {7, 0, 2,   0, 0, 3,   0, 6, 0},
-        {0, 0, 8,   2, 5, 0,   0, 0, 0},
-        {0, 0, 1,   6, 0, 7,   0, 0, 2},
+        {8, 6, 0,   0, 0, 0,   1, 0, 4},
+        {0, 3, 0,   6, 0, 0,   0, 5, 9},
+        {1, 0, 0,   0, 2, 0,   0, 0, 0},
 
-        {0, 0, 7,   0, 0, 5,   9, 2, 6},
-        {9, 3, 0,   7, 2, 0,   0, 0, 0},
-        {6, 0, 0,   0, 9, 0,   4, 7, 0}
+        {0, 9, 0,   0, 0, 0,   5, 0, 0},
+        {0, 0, 0,   0, 3, 2,   0, 1, 8},
+        {3, 0, 0,   1, 0, 5,   0, 0, 0}
     };
 int puzzle_notes[PUZZLE_SIZE][PUZZLE_SIZE][PUZZLE_SIZE];
 double solution_time;
@@ -27,9 +27,10 @@ double solution_time;
 void print_puzzle();
 int is_puzzle_solved();
 void solution1_basic(int count);
-void solution2_complex();
+void solution2_complex(int count);
 void take_notes();
-void locked_canidate();
+int contains_locked_canidate_n(int x, int y, int n);
+void locked_canidate(int block);
 
 
 /*METHODS METHODS METHODS METHODS METHODS METHODS METHODS METHODS METHODS*/
@@ -215,12 +216,12 @@ void solution1_basic(int count){
     } /* END LOOP1 */
 } /* END solution1_basic() */
 
-void solution2_complex(){
-    int count = 100;
-
+void solution2_complex(int count){
     while(is_puzzle_solved() != 0 && count > 0){
         solution1_basic(5);
-        
+        locked_canidate(0);
+
+        count = count - 1;
     }
 } /* END solution2_complex*/
 
@@ -228,7 +229,6 @@ void take_notes(){
     int square_row, square_col;
     int num_check[PUZZLE_SIZE] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
     int number_filled = 0;
-
     
     for(int row = 0; row < PUZZLE_SIZE; row++){/*LOOP2*/
         for(int col = 0; col < PUZZLE_SIZE; col++){/*LOOP3*/
@@ -281,52 +281,52 @@ void take_notes(){
                 puzzle_notes[row][col][puzzle[row][col]-1] = 1;
             }
 
-            printf("\n");
-            printf("(%d, %d) > { %d, %d } = %d:\t",
-                    row, col, square_row, square_col, number_filled);
-            for (int i = 0; i < PUZZLE_SIZE; i++){
-                printf("%d = %s; ", i+1, num_check[i] ? " true" : "false");
-            }
-            printf("\n");
+            // printf("\n");
+            // printf("(%d, %d) > { %d, %d } = %d:\t",
+            //         row, col, square_row, square_col, number_filled);
+            // for (int i = 0; i < PUZZLE_SIZE; i++){
+            //     printf("%d = %s; ", i+1, num_check[i] ? " true" : "false");
+            // }
+            // printf("\n");
 
         } /* END LOOP3 */
     } /* END LOOP2 */
 
     /*print notes*/
-    for ( int row = 0; row < PUZZLE_SIZE; row++ ){
-        /*notes 1-3*/
-        for ( int col = 0; col < PUZZLE_SIZE; col++ ){
-            for ( int i = 0; i < 3; i++){
-                if ( puzzle_notes[row][col][i] != 0 ) printf("%d ", i+1);
-                else printf("- ");
-            }
-            printf("  ");
-        }
+    // for ( int row = 0; row < PUZZLE_SIZE; row++ ){
+    //     /*notes 1-3*/
+    //     for ( int col = 0; col < PUZZLE_SIZE; col++ ){
+    //         for ( int i = 0; i < 3; i++){
+    //             if ( puzzle_notes[row][col][i] != 0 ) printf("%d ", i+1);
+    //             else printf("- ");
+    //         }
+    //         printf("  ");
+    //     }
 
-        printf("\n");
+    //     printf("\n");
 
-        /*notes 4-6*/
-        for ( int col = 0; col < PUZZLE_SIZE; col++ ){
-            for ( int i = 3; i < 6; i++){
-                if ( puzzle_notes[row][col][i] != 0 ) printf("%d ", i+1);
-                else printf("- ");
-            }
-            printf("  ");
-        }
+    //     /*notes 4-6*/
+    //     for ( int col = 0; col < PUZZLE_SIZE; col++ ){
+    //         for ( int i = 3; i < 6; i++){
+    //             if ( puzzle_notes[row][col][i] != 0 ) printf("%d ", i+1);
+    //             else printf("- ");
+    //         }
+    //         printf("  ");
+    //     }
 
-        printf("\n");
+    //     printf("\n");
 
-        /*notes 7-9*/
-        for ( int col = 0; col < PUZZLE_SIZE; col++ ){
-            for ( int i = 6; i < 9; i++){
-                if ( puzzle_notes[row][col][i] != 0 ) printf("%d ", i+1);
-                else printf("- ");
-            }
-            printf("  ");
-        }
-        printf("\n\n");
-        if( row%3 == 2 ) printf("\n");
-    }
+    //     /*notes 7-9*/
+    //     for ( int col = 0; col < PUZZLE_SIZE; col++ ){
+    //         for ( int i = 6; i < 9; i++){
+    //             if ( puzzle_notes[row][col][i] != 0 ) printf("%d ", i+1);
+    //             else printf("- ");
+    //         }
+    //         printf("  ");
+    //     }
+    //     printf("\n\n");
+    //     if( row%3 == 2 ) printf("\n");
+    // }
 }/* END take_notes() */
 
 int contains_locked_canidate_n(int x, int y, int n){
@@ -366,11 +366,14 @@ void locked_canidate(int block){
     block_row = block_row*3;
     int block_col = (block%3)*3;
 
+    take_notes();
+    print_puzzle();
+
     /*check each row*/
     for( int row = block_row; row < block_row; row++ ){ /*LOOP1*/
         for( int col = block_col; col < block_col+3; col++){ /*LOOP2*/
             for(int i = 0; i < PUZZLE_SIZE; i++){ /*LOOP3*/
-                if(contains_locked_canidate(row*2, col, i) == 0){
+                if(contains_locked_canidate_n(row*2, col, i) == 0){
                     for( int change_row = block_row; change_row < block_row+3;
                         change_row++){
                             if ( change_row != row){
@@ -391,7 +394,7 @@ void locked_canidate(int block){
     for( int col = block_col; col < block_col+3; col++ ){ /*LOOP1*/
         for( int row = block_row; row < block_row+3; row++){ /*LOOP2*/
             for(int i = 0; i < PUZZLE_SIZE; i++){ /*LOOP3*/
-                if(contains_locked_canidate((col*2)+1, row, i) == 0){
+                if(contains_locked_canidate_n((col*2)+1, row, i) == 0){
                     for( int change_col = block_col; change_col < block_col+3;
                         change_col++){
                             if ( change_col != col){
@@ -426,6 +429,31 @@ void locked_canidate(int block){
         }/* END LOOP2 */
     }/* END LOOP1 */
 
+    /*if num_check has only 1 false mark that number in!!*/
+    for ( int row = 0; row < PUZZLE_SIZE; row++ ){ /*LOOP1*/
+        for ( int col = 0; col < PUZZLE_SIZE; col++ ){ /*LOOP2*/
+            int c = 0;
+            for (int i = 0; i < PUZZLE_SIZE; i++){ /*LOOP3*/
+                if (puzzle_notes[row][col][i] != 0 && c < 1){
+                    c++;
+                }
+                else if (puzzle_notes[row][col][i] != 0 && c >= 1){
+                    c++;
+                    i = PUZZLE_SIZE;
+                }
+            } /*END LOOP3*/
+
+            /*if there is 1 number left fill it into the square*/
+            if (c == 1){
+                for (int i = 0; i < PUZZLE_SIZE; i++){ /*LOOP3*/
+                    if (puzzle_notes[row][col][i] != 0){
+                        puzzle[row][col] = i + 1;
+                    }
+                } /* END LOOP3*/
+            } /* END if */
+        }/* END LOOP2*/
+    }/* END LOOP1 */
+
     /*STEP*/
     locked_canidate(block+1); 
 } /* END locked_canidate() */
@@ -457,7 +485,7 @@ int main(){
     start = clock();
 
     /*Solutions*/
-    take_notes();
+    solution2_complex(50);
 
     /*Timer End*/
     end = clock();
