@@ -10,17 +10,17 @@
 /*9x9 Matrix numbers 1-9 or "0" for empty*/
 int puzzle[PUZZLE_SIZE][PUZZLE_SIZE] = 
     {
-        {7, 2, 1,   0, 0, 0,   0, 0, 8},
-        {5, 0, 0,   1, 0, 8,   0, 7, 0},
-        {0, 8, 0,   0, 7, 5,   6, 0, 0},
+        {0, 0, 3,   0, 7, 2,   0, 8, 0},
+        {6, 0, 0,   0, 0, 0,   0, 0, 0},
+        {0, 7, 2,   0, 0, 0,   6, 0, 0},
 
-        {0, 5, 0,   0, 1, 0,   0, 8, 6},
-        {8, 0, 0,   7, 0, 6,   0, 0, 5},
-        {4, 0, 0,   5, 8, 0,   0, 9, 0},
+        {0, 5, 8,   0, 0, 0,   4, 0, 0},
+        {9, 0, 0,   0, 1, 0,   0, 7, 8},
+        {0, 0, 7,   9, 0, 0,   5, 6, 1},
 
-        {0, 0, 8,   4, 5, 0,   0, 6, 0},
-        {0, 7, 0,   8, 0, 9,   0, 0, 2},
-        {0, 0, 5,   0, 0, 0,   8, 3, 0}
+        {4, 0, 0,   1, 5, 7,   8, 0, 0},
+        {0, 0, 0,   0, 0, 0,   7, 4, 0},
+        {0, 3, 0,   2, 0, 0,   0, 9, 0}
     };
 int puzzle_notes[PUZZLE_SIZE][PUZZLE_SIZE][PUZZLE_SIZE];
 double solution_time;
@@ -31,7 +31,6 @@ void print_puzzle();
 int is_puzzle_solved();
 void strat1();
 void strat2();
-void strat3();
 void take_notes();
 void print_notes();
 void fill_notes();
@@ -229,107 +228,6 @@ void strat2(){
 } /* END strat2*/
 
 
-/* Locked Canidate */
-/*  1) is a certain number n noted in the cell
-    2) is n noted elsewhere in adjacent cells
-    3) if it is all other squares in the original cell's block
-            cannot be n
-    Cell - three horizontal or vertical squares that are within
-            the same block and row/col*/
-void strat3(){
-    int block_row, cell_row, block_col, cell_col;
-
-    take_notes();
-    print_notes();
-
-    for( int i = 0; i < PUZZLE_SIZE; i++){
-        for (int j = 0; j < PUZZLE_SIZE*(BLOCK_SIZE); j++){
-            /*horizontal cells*/
-            cell_row = j%9;
-            block_row = (cell_row/3) * 3;
-            cell_col = (j%3) * 3;
-
-            int count = 0;
-
-            // Step 1
-            for ( int k = 0; k < BLOCK_SIZE; k++ ){
-                if ( puzzle_notes[cell_row][cell_col+k][i] != 0 ){
-                    count = 1;
-                    k = BLOCK_SIZE;
-                    printf("1: (%d, %d) contains %d\n", cell_row, cell_col+k, i+1);
-                }   
-            }
-
-            // Step 2
-            if ( count == 1 ){
-                for( int k = 0; k < PUZZLE_SIZE; k++ ){
-                    if( (k < cell_col || k >= (cell_col+3) )
-                        && puzzle_notes[cell_row][k][i] != 0 ){
-                            count = 0;
-                            k = PUZZLE_SIZE;
-                        printf("2: (%d, %d) contains %d\n", cell_row, k, i+1);
-                    }
-                }
-            }
-
-            // Step 3
-            if ( count == 1 ){
-                printf("step 3 hit\n");
-                for( int k = 0; k < PUZZLE_SIZE; k++ ){
-                    int note_row = (k/3) + block_row;
-                    int note_col = (k%3) + cell_col;
-
-                    if( note_row != cell_row ){
-                        puzzle_notes[note_row][note_col][i] = 0;
-                    }
-                }
-            }
-
-            printf("\n");
-
-            /*vertical cells*/
-            cell_row = (j/9) * 3;
-            cell_col = j%9;
-            block_col = (cell_col/3) * 3;
-
-            count = 0;
-
-            // Step 1
-            for( int k = 0; k < BLOCK_SIZE; k++ ){
-                if ( puzzle_notes[cell_row+k][cell_col][i] != 0 ){
-                    count = 1;
-                    k = BLOCK_SIZE;
-                }
-            }
-
-            // Step 2
-            if ( count == 1 ){
-                for ( int k = 0; k < PUZZLE_SIZE; k++ ){
-                    if ( ( k < cell_row || k >= cell_row+3 )
-                        && puzzle_notes[k][cell_col][i] != 0 ){
-                        
-                        count = 0;
-                        k = PUZZLE_SIZE;
-                    }
-                }
-            }
-
-            // Step 3
-            if ( count == 1 ){
-                for( int k = 0; k < PUZZLE_SIZE; k++){
-                    int note_row = (k/3) + cell_row;
-                    int note_col = (k%3) + block_col;
-
-                    if( note_col != cell_col ){
-                        puzzle_notes[note_row][note_col][i] = 0;
-                    }
-                }
-            }            
-        }
-    }
-} /* END strat3 */
-
-
 void take_notes(){
     int row, row_block, col, col_block;
     
@@ -460,11 +358,10 @@ int main(){
     start = clock();
 
     /*Solutions*/
-    strat3();
-    // while( is_puzzle_solved() != 0 && tries < 50 ){
-    //     strat2();
-    //     tries++;
-    // }
+    while( is_puzzle_solved() != 0 && tries < 50 ){
+        strat2();
+        tries++;
+    }
 
     /*Timer End*/
     end = clock();
